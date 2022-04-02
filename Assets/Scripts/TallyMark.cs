@@ -23,7 +23,8 @@ public class TallyMark : MonoBehaviour
         int tallyCount = Globals.DayCount - 1; // we wanted to start tallying at stage 2?
         Debug.Log(tallyCount);
 
-        GameObject newTally = Instantiate(origTally, Camera.main.transform, true);
+        Transform table = GameObject.Find("Table").transform;
+        GameObject newTally = Instantiate(origTally, table, true);
         newTally.transform.position += Vector3.right * tallyCount * (distBetween + size.x);
         newTally.transform.Translate(
             new Vector3(Random.Range(-size.x, size.x), Random.Range(-size.y / 4, size.y / 4), 0));

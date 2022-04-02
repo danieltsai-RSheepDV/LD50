@@ -33,14 +33,20 @@ public class PresentableObject : MonoBehaviour
                 Vector3.up * Input.GetAxis("Mouse Y") / Screen.height * 10 * width;
             Cursor.lockState = CursorLockMode.Locked;
         }
+        else if(onScreen)
+        {
+            this.transform.position += Vector3.up * Input.mouseScrollDelta.y / Screen.height * 10 * width;
+        }
     }
 
     private void OnMouseDown()
     {
         mouseDown = onScreen;
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        if (onScreen)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
     private void OnMouseUp()
     {
