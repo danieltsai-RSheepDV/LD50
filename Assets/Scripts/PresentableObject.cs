@@ -15,6 +15,9 @@ public class PresentableObject : MonoBehaviour
     private float width;
     private float stepAngle;
 
+    public Vector3 worldPosition;
+    private float storedYDistanceFromMouse = 0;
+
     void Start()
     {
         onScreen = false;
@@ -27,15 +30,21 @@ public class PresentableObject : MonoBehaviour
 
     public void Update()
     {
+        Plane plane = new Plane(Vector3.forward, 9);
+        float distance;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (plane.Raycast(ray, out distance))
+        {
+            worldPosition = ray.GetPoint(distance);
+        }
+        
         if (mouseDown)
         {
-            this.transform.position +=
-                Vector3.up * Input.GetAxis("Mouse Y") / Screen.height * 10 * width;
-            Cursor.lockState = CursorLockMode.Locked;
+            transform.position = new Vector3(transform.position.x, worldPosition.y - storedYDistanceFromMouse, transform.position.z);
         }
         else if(onScreen)
         {
-            this.transform.position += Vector3.up * Input.mouseScrollDelta.y / Screen.height * 10 * width;
+            transform.position += Vector3.up * Input.mouseScrollDelta.y / Screen.height * 10 * width;
         }
     }
 
@@ -44,15 +53,17 @@ public class PresentableObject : MonoBehaviour
         mouseDown = onScreen;
         if (onScreen)
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            storedYDistanceFromMouse = worldPosition.y - transform.position.y;
+            Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            // Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
         }
     }
     private void OnMouseUp()
     {
         mouseDown = false;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        // Cursor.visible = true;
+        // Cursor.lockState = CursorLockMode.None;
     }
     public void present()
     {

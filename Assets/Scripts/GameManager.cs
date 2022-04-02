@@ -6,6 +6,8 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
+    private const int maxTime = 30;
+    
     private int requiredAmmo = 30;
     private bool successfulRequest = false;
     
@@ -32,6 +34,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+
+        timeLeft = maxTime;
     }
 
     // Start is called before the first frame update
@@ -65,32 +69,40 @@ public class GameManager : MonoBehaviour
         // Else
         else
         {
+            //Create request audio
+            
             int updateClipNum = random.Next(1, 5);
             int requestClipNum = random.Next(1, 5);
             int conclusionClipNum = random.Next(1, 5);
             
             // Update audio clips
-
+            
+            // Set request ammo requirement
+            
             switch (requestClipNum)
             {
                 case 1:
-                    requiredAmmo = 30;
+                    requiredAmmo = 0;
                     break;
                 case 2:
-                    requiredAmmo = 40;
+                    requiredAmmo = 5;
                     break;
                 case 3:
-                    requiredAmmo = 50;
+                    requiredAmmo = 12;
                     break;
                 case 4:
-                    requiredAmmo = 70;
+                    requiredAmmo = 15;
                     break;
                 case 5:
-                    requiredAmmo = 100;
+                    requiredAmmo = 30;
                     break;
             }
 
-            requiredAmmo += timeLeft;
+            requiredAmmo += (maxTime - timeLeft) * 4;
+            
+            // Give bullets
+
+            ammoLeft += 100 - ((maxTime - timeLeft) * 3);
         }
 
 
