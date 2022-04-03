@@ -36,7 +36,7 @@ public class MorseCode : MonoBehaviour
         foreach(char letter in message)
         {
             if (letter == ' ' || letter == '.')
-                StartCoroutine(pause(7));
+                StartCoroutine(pause(4));
             else
             {
                 string code = morseCode[letter];
@@ -53,5 +53,6 @@ public class MorseCode : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         on = false;
+        yield return new WaitForSeconds(3);
     }
 }
