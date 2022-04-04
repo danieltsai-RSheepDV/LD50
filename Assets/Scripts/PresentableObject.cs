@@ -17,6 +17,7 @@ public class PresentableObject : MonoBehaviour
 
     public Vector3 worldPosition;
     private float storedYDistanceFromMouse = 0;
+    private float clickTime = 0;
 
     void Start()
     {
@@ -30,7 +31,7 @@ public class PresentableObject : MonoBehaviour
 
     public void Update()
     {
-        Plane plane = new Plane(Vector3.forward, 9);
+        Plane plane = new Plane(Vector3.forward, camPosition.z);
         float distance;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (plane.Raycast(ray, out distance))
@@ -50,6 +51,7 @@ public class PresentableObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        clickTime = Time.time;
         mouseDown = onScreen;
         if (onScreen)
         {
@@ -67,7 +69,7 @@ public class PresentableObject : MonoBehaviour
     }
     public void present()
     {
-        if (!onScreen || Input.GetKey(KeyCode.Space))
+        if (!onScreen || Time.time - clickTime < 0.2f)
         {
             StartCoroutine(rotateStep(!onScreen));
             StartCoroutine(zoomStep(!onScreen));

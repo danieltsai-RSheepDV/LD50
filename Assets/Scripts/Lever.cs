@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Lever : MonoBehaviour
 {
-    [SerializeField] public float downSpeed = 5f, upSpeed = 2.5f, pauseTime = 1;
+    [SerializeField] public float downSpeed = 5f, upSpeed = 1f, pauseTime = 0.25f;
     [SerializeField] public float upAngle = 345, downAngle = 225;
+
     public bool leverReady;
     // Start is called before the first frame update
     public void Start()
@@ -30,6 +31,7 @@ public class Lever : MonoBehaviour
             this.transform.eulerAngles = new Vector3 (rot, 0, 0);
             yield return null;
         }
+        this.transform.eulerAngles = new Vector3(downAngle, 0, 0);
         yield return new WaitForSeconds(pauseTime);
         for (float rot = downAngle; rot < upAngle; rot += upSpeed)
         {
