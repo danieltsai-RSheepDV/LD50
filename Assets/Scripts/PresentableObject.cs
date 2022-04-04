@@ -17,6 +17,7 @@ public class PresentableObject : MonoBehaviour
 
     public Vector3 worldPosition;
     private float storedYDistanceFromMouse = 0;
+    private float clickTime = 0;
 
     void Start()
     {
@@ -30,7 +31,7 @@ public class PresentableObject : MonoBehaviour
 
     public void Update()
     {
-        Plane plane = new Plane(Vector3.forward, 9);
+        Plane plane = new Plane(Vector3.forward, -camPosition.z);
         float distance;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (plane.Raycast(ray, out distance))
@@ -50,6 +51,7 @@ public class PresentableObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        clickTime = Time.time;
         mouseDown = onScreen;
         if (onScreen)
         {
@@ -67,7 +69,7 @@ public class PresentableObject : MonoBehaviour
     }
     public void present()
     {
-        if (!onScreen || Input.GetKey(KeyCode.Space))
+        if (!onScreen || Time.time - clickTime < 0.2f)
         {
             StartCoroutine(rotateStep(!onScreen));
             StartCoroutine(zoomStep(!onScreen));
@@ -76,7 +78,7 @@ public class PresentableObject : MonoBehaviour
 
     public IEnumerator zoomStep(bool expand)
     {
-        Vector3 target = expand ? camPosition : origPosition;
+        Vector3 target = expand ? camPosition + Vector3.down * 3 : origPosition;
         while (Vector3.Distance(target, this.transform.position) > zoomSpeed)
         {
             this.transform.position += (Vector3.Normalize(target - this.transform.position) * zoomSpeed);
@@ -90,9 +92,9 @@ public class PresentableObject : MonoBehaviour
     {
         for (float i = 0; i < 90; i += stepAngle)
         {
-            this.transform.rotation = Quaternion.Euler(expand ? -i: i - 90, 0, 0); ;
+            this.transform.rotation = Quaternion.Euler(expand ? 90 - i: i, 0, 0); ;
             yield return null;
         }
-        this.transform.rotation = Quaternion.Euler(expand ? -90 : 0, 0, 0); ;
+        this.transform.rotation = Quaternion.Euler(expand ? 0 : 90, 0, 0); ;
     }
 }
