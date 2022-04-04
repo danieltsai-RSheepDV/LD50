@@ -24,7 +24,7 @@ public class PresentableObject : MonoBehaviour
         onScreen = false;
         mouseDown = false;
         width = this.GetComponent<Renderer>().bounds.size.x;
-        camPosition = Camera.main.transform.position + Vector3.forward * width;
+        camPosition = Camera.main.transform.position + Vector3.forward * Mathf.Sqrt(width);
         origPosition = this.transform.position;
         stepAngle = 90 / Vector3.Distance(camPosition, origPosition) * zoomSpeed * 1.25f;
     }
