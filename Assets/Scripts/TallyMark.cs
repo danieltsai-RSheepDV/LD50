@@ -8,6 +8,7 @@ public class TallyMark : MonoBehaviour
     public static GameObject origTally = null;
     private static Vector3 size = Vector3.zero;
     private static int wrapTallies = 10;
+    [SerializeField] float fadeSpeed = 1f;
 
     public void Start()
     {
@@ -16,6 +17,17 @@ public class TallyMark : MonoBehaviour
             TallyMark.origTally = this.gameObject;
             TallyMark.size = TallyMark.origTally.GetComponent<Renderer>().bounds.size;
             TallyMark.origTally.GetComponent<Renderer>().enabled = false;
+        }
+    }
+
+    private IEnumerator fadeIn(Material mat)
+    {
+        Color col = mat.color;
+        for (col.a = 0; col.a < 1; col.a += fadeSpeed)
+        {
+            mat.color = new Color(col.r, col.g, col.b, col.a);
+            Debug.Log(mat.color.a);
+            yield return null;
         }
     }
 
@@ -33,11 +45,13 @@ public class TallyMark : MonoBehaviour
             + new Vector3(Random.Range(-size.x, size.x), Random.Range(-size.y / 4, size.y / 4), 0);
 
         if (tallyCount % 5 == 0)
-            newTally.transform.rotation = Quaternion.Euler(0, angle * 180 / Mathf.PI, 0);
-            newTally.transform.position += Vector3.left * 3.5f * increment;
+        {
+            newTally.transform.position += Vector3.left * 2.5f * increment;
+            newTally.transform.rotation = Quaternion.Euler(0, angle * 180 / Mathf.PI - 0.05f, 0);
             Vector3 scale = newTally.transform.localScale;
-            scale.z /= Mathf.Sin(angle) + Random.Range(-0.1f, 0.1f);
+            scale.z /= Mathf.Sin(angle) + Random.Range(0, 0.2f);
             newTally.transform.localScale = scale;
+        }
         if (tallyCount == 0)
         {
             newTally.transform.position += Vector3.right * wrapTallies * increment;
@@ -45,6 +59,5 @@ public class TallyMark : MonoBehaviour
         }
 
         newTally.transform.Rotate(0, Random.Range(-5, 5), 0);
-        newTally.GetComponent<Renderer>().enabled = true;
     }
 }
