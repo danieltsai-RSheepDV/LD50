@@ -31,7 +31,7 @@ public class PresentableObject : MonoBehaviour
 
     public void Update()
     {
-        Plane plane = new Plane(Vector3.forward, camPosition.z);
+        Plane plane = new Plane(Vector3.forward, -camPosition.z);
         float distance;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (plane.Raycast(ray, out distance))
