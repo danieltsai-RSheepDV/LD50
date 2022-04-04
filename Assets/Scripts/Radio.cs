@@ -11,7 +11,9 @@ public class Radio : MonoBehaviour
     [SerializeField] private AudioClip[] requests;
     [SerializeField] private AudioClip[] closing;
     [SerializeField] private AudioClip[] checkPoints;
+    [SerializeField] private AudioClip[] music;
     [SerializeField] private AudioSource audioSource;
+    int checkpointStatus;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,12 +39,16 @@ public class Radio : MonoBehaviour
                 break;
             case 2:
                 //play music
+                audioSource.Pause();
+                audioSource.clip = music[checkpointStatus];
+                audioSource.Play();
                 break;
         }
     }
 
     void RequestChannel(bool passFail, bool isCheckpoint, int checkPoint)
     {
+        checkpointStatus = checkPoint;
         if (isCheckpoint)
         {
             audioSource.Pause();
