@@ -75,6 +75,11 @@ public class Radio : MonoBehaviour
         
         PlaySound(music);
     }
+
+    public void PlayStatic()
+    {
+        PlaySound(statics);
+    }
     
     public void PlaySound(AudioClip clip)
     {

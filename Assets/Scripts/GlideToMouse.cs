@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GlideToMouse : MonoBehaviour
 {
+    [SerializeField] float speed = 0.5f;
     public bool enabled = true;
     //Y angle is horizontal, x angle is vertical
     [SerializeField] private float maxHorizAngle, maxVertAngle;
@@ -19,6 +20,6 @@ public class GlideToMouse : MonoBehaviour
         if (currRot.x > 180) currRot.x -= 360;
         if (currRot.y > 180) currRot.y -= 360;
         Camera.main.transform.eulerAngles += new Vector3(
-            (xAngle - currRot.x)/5, (yAngle - currRot.y)/5, 0) / 180 * Mathf.PI;
+            (xAngle - currRot.x) * speed, (yAngle - currRot.y) * speed, 0) / 180 * Mathf.PI;
     }
 }
