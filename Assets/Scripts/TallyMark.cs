@@ -9,7 +9,8 @@ public class TallyMark : MonoBehaviour
     public static GameObject origTally = null;
     private static Vector3 size = Vector3.zero;
     private static int wrapTallies = 10;
-    [SerializeField] static int startDay = 30;
+    private static int StartDay;
+    [SerializeField] int startDay = 30;
 
     public void Start()
     {
@@ -18,6 +19,7 @@ public class TallyMark : MonoBehaviour
             TallyMark.origTally = this.gameObject;
             TallyMark.size = TallyMark.origTally.GetComponent<Renderer>().bounds.size;
             TallyMark.origTally.GetComponent<Renderer>().enabled = false;
+            TallyMark.StartDay = this.startDay;
         }
 
     }
@@ -26,16 +28,16 @@ public class TallyMark : MonoBehaviour
     {
         for(int i = 0; i < numDays; i++)
         {
-            numTallies++;
             TallyNextDay();
         }
     }
 
     public static void TallyNextDay()
     {
-        if (numTallies < startDay)
+        numTallies++;
+        if (numTallies < TallyMark.StartDay)
             return;
-        int tallyCount = (Globals.DayCount - startDay) % wrapTallies; // we wanted to start tallying at stage 2?
+        int tallyCount = (Globals.DayCount - TallyMark.StartDay) % wrapTallies; // we wanted to start tallying at stage 2?
         float increment = distBetween + size.x;
         float angle = -Mathf.Atan(size.z / 3 / increment);
 

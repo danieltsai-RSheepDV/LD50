@@ -9,7 +9,6 @@ public class Globals : MonoBehaviour
 
     public static void NextDay()
     {
-        DayCount++;
-        StageNum = (int)(DayCount / 30) + 1;
+        TallyMark.TallyNextDay();
     }
 }
