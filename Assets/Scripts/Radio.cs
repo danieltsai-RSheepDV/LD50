@@ -33,6 +33,13 @@ public class Radio : MonoBehaviour
         }
     }
 
+    public void PlayStatic()
+    {
+        audioSource.clip = statics;
+        audioSource.Play();
+        audioSource.loop = true;
+    }
+
     public void PlayCreepyMusic()
     {
         audioSource.clip = musicl;
