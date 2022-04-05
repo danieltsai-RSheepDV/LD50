@@ -12,12 +12,11 @@ public class GameManager : MonoBehaviour
     private bool successfulRequest = false;
     
     private bool mailmanLetter = false;
-    private bool opposingLetter = false;
-    private bool crazyLetter = false;
+    private int mailmanLetterNum = 0;
 
     private Random random = new Random();
     private int timeLeft = 30;
-    private int ammoLeft = 15;
+    private int ammoLeft = 100;
     
     private static GameManager _instance;
 
@@ -105,7 +104,11 @@ public class GameManager : MonoBehaviour
             ammoLeft += 100 - ((maxTime - timeLeft) * 3);
         }
 
-
+        // Determine extra character letter
+        if (random.Next(0, 1) == 1)
+        {
+            
+        }
     }
 
     public void SubmitAmmo(int amount)

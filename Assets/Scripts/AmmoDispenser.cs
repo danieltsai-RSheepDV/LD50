@@ -23,11 +23,12 @@ public class AmmoDispenser : MonoBehaviour
 
     public void UpdateAmmoVisuals()
     {
-        text.text = ammo.ToString();
+        text.text = ammo.ToString("000");;
     }
 
     public void AddAmmo(int amount)
     {
+        if(ammo == GameManager.Instance.GetAmmoLeft()) return;
         if (ammo + amount > GameManager.Instance.GetAmmoLeft()) ammo = GameManager.Instance.GetAmmoLeft();
         else ammo += amount;
         
@@ -44,5 +45,10 @@ public class AmmoDispenser : MonoBehaviour
     public void SubmitAmmo()
     {
         GameManager.Instance.SubmitAmmo(ammo);
+    }
+
+    public int GetAmmo()
+    {
+        return ammo;
     }
 }

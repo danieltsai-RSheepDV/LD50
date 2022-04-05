@@ -24,7 +24,7 @@ public class PresentableObject : MonoBehaviour
         onScreen = false;
         mouseDown = false;
         width = this.GetComponent<Renderer>().bounds.size.x;
-        camPosition = Camera.main.transform.position + Vector3.forward * Mathf.Sqrt(width);
+        camPosition = Camera.main.transform.position + Vector3.forward * width;
         origPosition = this.transform.position;
         stepAngle = 90 / Vector3.Distance(camPosition, origPosition) * zoomSpeed * 1.25f;
     }
@@ -78,7 +78,7 @@ public class PresentableObject : MonoBehaviour
 
     public IEnumerator zoomStep(bool expand)
     {
-        Vector3 target = expand ? camPosition : origPosition;
+        Vector3 target = expand ? camPosition + Vector3.down * 3 : origPosition;
         while (Vector3.Distance(target, this.transform.position) > zoomSpeed)
         {
             this.transform.position += (Vector3.Normalize(target - this.transform.position) * zoomSpeed);
@@ -92,9 +92,9 @@ public class PresentableObject : MonoBehaviour
     {
         for (float i = 0; i < 90; i += stepAngle)
         {
-            this.transform.rotation = Quaternion.Euler(expand ? -i: i - 90, 0, 0); ;
+            this.transform.rotation = Quaternion.Euler(expand ? 90 - i: i, 0, 0); ;
             yield return null;
         }
-        this.transform.rotation = Quaternion.Euler(expand ? -90 : 0, 0, 0); ;
+        this.transform.rotation = Quaternion.Euler(expand ? 0 : 90, 0, 0); ;
     }
 }
