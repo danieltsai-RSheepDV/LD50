@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class TallyMark : MonoBehaviour
 {
+    private static int numTallies = 0;
     public static float distBetween = 0.1f;
     public static GameObject origTally = null;
     private static Vector3 size = Vector3.zero;
     private static int wrapTallies = 10;
-    [SerializeField] float fadeSpeed = 1f;
+    [SerializeField] static int startDay = 30;
 
     public void Start()
     {
@@ -18,28 +19,27 @@ public class TallyMark : MonoBehaviour
             TallyMark.size = TallyMark.origTally.GetComponent<Renderer>().bounds.size;
             TallyMark.origTally.GetComponent<Renderer>().enabled = false;
         }
+
     }
 
-    private IEnumerator fadeIn(Material mat)
+    public static void TallyNextDays(int numDays)
     {
-        Color col = mat.color;
-        for (col.a = 0; col.a < 1; col.a += fadeSpeed)
+        for(int i = 0; i < numDays; i++)
         {
-            mat.color = new Color(col.r, col.g, col.b, col.a);
-            Debug.Log(mat.color.a);
-            yield return null;
+            numTallies++;
+            TallyNextDay();
         }
     }
 
     public static void TallyNextDay()
     {
-        if (Globals.DayCount <= 1)
+        if (numTallies < startDay)
             return;
-        int tallyCount = (Globals.DayCount - 1) % wrapTallies; // we wanted to start tallying at stage 2?
+        int tallyCount = (Globals.DayCount - startDay) % wrapTallies; // we wanted to start tallying at stage 2?
         float increment = distBetween + size.x;
         float angle = -Mathf.Atan(size.z / 3 / increment);
 
-        Transform table = GameObject.Find("Table").transform;
+        Transform table = GameObject.Find("TallyMarks").transform;
         GameObject newTally = Instantiate(origTally, table, true);
         newTally.transform.position += Vector3.right * tallyCount * increment
             + new Vector3(Random.Range(-size.x, size.x), Random.Range(-size.y / 4, size.y / 4), 0);
