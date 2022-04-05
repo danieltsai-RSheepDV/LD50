@@ -11,9 +11,13 @@ public class Radio : MonoBehaviour
     [SerializeField] private AudioClip[] requests;
     [SerializeField] private AudioClip[] closing;
     [SerializeField] private AudioClip[] checkPoints;
-    [SerializeField] private AudioClip[] music;
     [SerializeField] private AudioSource audioSource;
-    int checkpointStatus;
+
+    [SerializeField] private AudioClip music;
+    [SerializeField] private AudioClip musicl;
+    [SerializeField] private AudioClip statics;
+    
+    Queue<AudioClip> clipQueue = new Queue<AudioClip>();
     // Start is called before the first frame update
     void Start()
     {
@@ -23,32 +27,23 @@ public class Radio : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    void SwitchChannels(int channel)
-    {
-        switch (channel)
-        {
-            case 0:
-                //play news
-                break;
-            case 1:
-                //play orders
-                //RequestChannel(/*pass fail bool*/);
-                break;
-            case 2:
-                //play music
-                audioSource.Pause();
-                audioSource.clip = music[checkpointStatus];
-                audioSource.Play();
-                break;
+        if (audioSource.isPlaying == false && clipQueue.Count > 0) {
+            audioSource.clip = clipQueue.Dequeue();
+            audioSource.Play();
         }
     }
 
-    void RequestChannel(bool passFail, bool isCheckpoint, int checkPoint)
+    public void PlayCreepyMusic()
     {
-        checkpointStatus = checkPoint;
+        audioSource.clip = musicl;
+        audioSource.Play();
+        audioSource.loop = true;
+    }
+
+    public void RequestChannel(bool passFail, bool isCheckpoint, int checkPoint)
+    {
+        audioSource.Stop();
+        
         if (isCheckpoint)
         {
             audioSource.Pause();
@@ -59,30 +54,30 @@ public class Radio : MonoBehaviour
         else
         {
             //play intro
-            audioSource.clip = intro;
-            audioSource.Play();
+            PlaySound(intro);
 
             //if pass:
             if (passFail)
             {
-                audioSource.Pause();
-                audioSource.clip = UpdateP[Random.Range(0, 3)];
-                audioSource.Play();
+                PlaySound(UpdateP[Random.Range(0, 3)]);
             }
             //if fail:
             else
             {
-                audioSource.Pause();
-                audioSource.clip = UpdateF[Random.Range(0, 3)];
-                audioSource.Play();
+                PlaySound(UpdateF[Random.Range(0, 3)]);
             }
-            audioSource.Pause();
-            audioSource.clip = requests[Random.Range(0, 8)];
-            audioSource.Play();
+            PlaySound(requests[Random.Range(0, 8)]);
 
-            audioSource.Pause();
-            audioSource.clip = closing[Random.Range(0, 2)];
-            audioSource.Play();
+            PlaySound(closing[Random.Range(0, 2)]);
         }
+        
+        PlaySound(statics);
+        
+        PlaySound(music);
+    }
+    
+    public void PlaySound(AudioClip clip)
+    {
+        clipQueue.Enqueue(clip);
     }
 }

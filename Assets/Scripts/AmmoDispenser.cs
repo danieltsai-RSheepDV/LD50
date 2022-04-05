@@ -6,12 +6,14 @@ using UnityEngine;
 public class AmmoDispenser : MonoBehaviour
 {
     [SerializeField] private TextMeshPro text;
+    [SerializeField] private TextMeshPro text2;
     
     private int ammo = 0;
     
     // Start is called before the first frame update
     void Start()
     {
+        text2.text = GameManager.Instance.GetAmmoLeft().ToString("000");
         
     }
 
@@ -24,6 +26,7 @@ public class AmmoDispenser : MonoBehaviour
     public void UpdateAmmoVisuals()
     {
         text.text = ammo.ToString("000");;
+        text2.text = GameManager.Instance.GetAmmoLeft().ToString("000");
     }
 
     public void AddAmmo(int amount)

@@ -12,7 +12,7 @@ public class PresentableObject : MonoBehaviour
     private bool mouseDown;
     private Vector3 origPosition;
     private Vector3 camPosition;
-    private float width;
+    private float width = 10;
     private float stepAngle;
 
     public Vector3 worldPosition;
