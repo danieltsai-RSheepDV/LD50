@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.2
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.16394123, g: 0.16783842, b: 0.15658104, a: 0.2}
+  m_IndirectSpecularColor: {r: 0.16394109, g: 0.16783834, b: 0.15658084, a: 0.2}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -407,7 +407,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1842610801}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LightSwitcher, Assembly-CSharp
         m_MethodName: turnSwitch
         m_Mode: 1
@@ -643,6 +643,7 @@ GameObject:
   - component: {fileID: 326118289}
   - component: {fileID: 326118288}
   - component: {fileID: 326118286}
+  - component: {fileID: 326118287}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -662,9 +663,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 363771cdff5cab641b0c45c2831864d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0.5
   enabled: 1
-  maxHorizAngle: 10
-  maxVertAngle: 5
+  maxHorizAngle: 15
+  maxVertAngle: 10
 --- !u!114 &326118287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1870,7 +1872,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b788fa2c5b038fe48a9f0251ebc87469, type: 3}
   m_PrefabInstance: {fileID: 1071691896}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667248048}
+  m_GameObject: {fileID: 1603168974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -3933,6 +3935,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ce6e6d0f7030fea44889340f4f568c12, type: 3}
   m_PrefabInstance: {fileID: 1499856789}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1603168974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b788fa2c5b038fe48a9f0251ebc87469, type: 3}
+  m_PrefabInstance: {fileID: 1071691896}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1071691897}
+  m_Layer: 0
+  m_Name: 'Table (Missing Prefab with guid: b788fa2c5b038fe48a9f0251ebc87469)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1611529410
 GameObject:
   m_ObjectHideFlags: 0
@@ -3961,6 +3979,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1169667079}
+  - {fileID: 292245854}
   - {fileID: 1842610800}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -4470,7 +4489,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1611529411}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1843285642
 PrefabInstance:
@@ -4541,7 +4560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6467332507041858513, guid: 3b5ea86cadc3d3d4c9ac3931beed5c9c, type: 3}
       propertyPath: zoomSpeed
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6467332507041858514, guid: 3b5ea86cadc3d3d4c9ac3931beed5c9c, type: 3}
       propertyPath: m_Materials.Array.data[0]
