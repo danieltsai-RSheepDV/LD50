@@ -10,7 +10,7 @@ public class TallyMark : MonoBehaviour
     private static Vector3 size = Vector3.zero;
     private static int wrapTallies = 10;
     private static int StartDay;
-    [SerializeField] int startDay = 30;
+    [SerializeField] int startDay = 1;
 
     public void Start()
     {
@@ -37,7 +37,7 @@ public class TallyMark : MonoBehaviour
         numTallies++;
         if (numTallies < TallyMark.StartDay)
             return;
-        int tallyCount = (Globals.DayCount - TallyMark.StartDay) % wrapTallies; // we wanted to start tallying at stage 2?
+        int tallyCount = (numTallies - TallyMark.StartDay) % wrapTallies; // we wanted to start tallying at stage 2?
         float increment = distBetween + size.x;
         float angle = -Mathf.Atan(size.z / 3 / increment);
 
@@ -61,5 +61,6 @@ public class TallyMark : MonoBehaviour
         }
 
         newTally.transform.Rotate(0, Random.Range(-5, 5), 0);
+        newTally.GetComponent<Renderer>().enabled = true;
     }
 }
